@@ -1,0 +1,24 @@
+{
+  "name": "hostel-outpass-management-system",
+  "version": "1.0.0",
+  "description": "Hostel Outpass Management Dashboard - MCA Major Project",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "seed": "cd backend && npm run seed",
+    "test": "cd backend && npm test",
+    "start": "cd backend && npm start",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "hostel",
+    "outpass",
+    "management",
+    "gate-scanner",
+    "rbac"
+  ],
+  "author": "Full-Stack MCA Architect",
+  "license": "MIT"
+}
