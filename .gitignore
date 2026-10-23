@@ -1,9 +1,10 @@
-
 node_modules/
 .env
 .env.*
 !.env.example
+!**/.env.example
 .data/
 backend/.data/
-frontend/dist/
+frontend/dist/git diff -- .gitignore backend/.env.example
 backend/dist/
+frontend/dist/

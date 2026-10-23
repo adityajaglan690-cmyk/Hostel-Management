@@ -3,6 +3,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const app = require('./app');
 const { connectDB } = require('./config/db');
+const { isOriginAllowed } = require('./config/corsConfig');
 const setupSocketIO = require('./socket/socketHandler');
 const BackgroundJobService = require('./services/backgroundJobService');
 const seedDatabase = require('./seed/seedData');
@@ -21,8 +22,15 @@ const startServer = async () => {
     const server = http.createServer(app);
     const io = new Server(server, {
       cors: {
-        origin: '*',
-        methods: ['GET', 'POST']
+        origin: (origin, callback) => {
+          if (isOriginAllowed(origin)) {
+            callback(null, true);
+          } else {
+            callback(new Error(`Socket.IO CORS blocked for origin: ${origin}`));
+          }
+        },
+        methods: ['GET', 'POST'],
+        credentials: true
       }
     });
 

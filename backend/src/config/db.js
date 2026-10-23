@@ -6,7 +6,31 @@ let mongodInstance = null;
 
 const connectDB = async () => {
   const uri = process.env.MONGODB_URI;
+  const isProduction = process.env.NODE_ENV === 'production';
 
+  // Strict enforcement in production: Never silently fall back to MongoMemoryServer
+  if (isProduction) {
+    if (!uri) {
+      const errMsg = '[DB] FATAL: MONGODB_URI environment variable is required in production mode. Embedded MongoMemoryServer fallback is strictly disabled in production.';
+      console.error(errMsg);
+      throw new Error(errMsg);
+    }
+
+    try {
+      console.log(`[DB] Attempting connection to production MongoDB Atlas: ${uri.replace(/\/\/.*@/, '//***:***@')}`);
+      await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 5000
+      });
+      console.log('[DB] Successfully connected to production MongoDB Atlas');
+      return mongoose.connection;
+    } catch (err) {
+      const errMsg = `[DB] FATAL: Failed to connect to production MongoDB Atlas (${err.message}). In-memory fallback is strictly disabled in production.`;
+      console.error(errMsg);
+      throw new Error(errMsg);
+    }
+  }
+
+  // Non-production (development & test) modes:
   if (uri && process.env.USE_MEMORY_DB !== 'true') {
     try {
       console.log(`[DB] Attempting connection to external MongoDB: ${uri.replace(/\/\/.*@/, '//***:***@')}`);

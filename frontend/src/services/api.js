@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// In production on Netlify, VITE_API_URL points to the Render backend (e.g. https://hostel-management-m1hs.onrender.com/api)
+// In local development, Vite proxies '/api' to http://localhost:5000 if VITE_API_URL is unset
+const rawApiUrl = import.meta.env.VITE_API_URL;
+export const API_BASE_URL = rawApiUrl ? rawApiUrl.replace(/\/+$/, '') : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }

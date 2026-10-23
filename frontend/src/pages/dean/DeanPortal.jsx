@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import api from '../../services/api';
+import api, { API_BASE_URL } from '../../services/api';
 import StatCard from '../../components/StatCard';
 import StatusBadge from '../../components/StatusBadge';
 import Modal from '../../components/Modal';
@@ -110,7 +110,7 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
 
   const handleExportCSV = async () => {
     try {
-      window.open('/api/admin/reports/export', '_blank');
+      window.open(`${API_BASE_URL}/admin/reports/export`, '_blank');
     } catch (e) {
       alert('Export failed.');
     }

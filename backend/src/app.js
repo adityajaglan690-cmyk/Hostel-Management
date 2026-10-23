@@ -10,18 +10,17 @@ const adminRoutes = require('./routes/adminRoutes');
 const commonRoutes = require('./routes/commonRoutes');
 const healthRoutes = require('./routes/healthRoutes');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
+const { corsOptions } = require('./config/corsConfig');
 
 const app = express();
 
-// Security Headers & CORS
-app.use(helmet());
+// Security Headers & Secure CORS
 app.use(
-  cors({
-    origin: '*', // In production can restrict to frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-scanner-code', 'x-api-key', 'x-gate-code']
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' }
   })
 );
+app.use(cors(corsOptions));
 
 // Body Parsers & Request Logging
 app.use(express.json({ limit: '10mb' }));
@@ -29,6 +28,16 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
+
+// Root Route & Health
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ONLINE',
+    service: 'Hostel Outpass Management API',
+    version: '1.0.0',
+    health: '/api/health'
+  });
+});
 
 // API Routes
 app.use('/api', healthRoutes);
