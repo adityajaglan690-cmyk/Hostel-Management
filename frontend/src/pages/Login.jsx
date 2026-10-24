@@ -7,43 +7,14 @@ import {
   Settings, 
   Camera, 
   AlertCircle, 
-  ArrowRight,
-  Sparkles
+  ArrowRight
 } from 'lucide-react';
-
-const DEMO_CREDENTIALS = {
-  STUDENT: {
-    id: 'COER253028008',
-    pass: 'Student@123',
-    desc: 'Aditya Sharma (MCA Resident)'
-  },
-  WARDEN: {
-    id: 'WRD-101',
-    pass: 'Warden@123',
-    desc: 'Dr. Rajesh Kumar (Ramanujan Bhawan)'
-  },
-  DEAN: {
-    id: 'DEN-201',
-    pass: 'Dean@123',
-    desc: 'Prof. Meenakshi Verma (Student Welfare)'
-  },
-  ADMIN: {
-    id: 'ADM-001',
-    pass: 'Admin@123',
-    desc: 'Vikram Malhotra (System Administrator)'
-  },
-  SECURITY_GUARD: {
-    id: 'GRD-301',
-    pass: 'Guard@123',
-    desc: 'Surender Singh (Main Gate Security Post)'
-  }
-};
 
 export default function Login({ onRegisterClick, onStaffRegisterClick }) {
   const { login } = useAuth();
   const [selectedRole, setSelectedRole] = useState('STUDENT');
-  const [collegeId, setCollegeId] = useState(DEMO_CREDENTIALS.STUDENT.id);
-  const [password, setPassword] = useState(DEMO_CREDENTIALS.STUDENT.pass);
+  const [collegeId, setCollegeId] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -58,9 +29,6 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
   const handleRoleChange = (roleId) => {
     setSelectedRole(roleId);
     setError('');
-    // Auto-populate demo credentials for seamless evaluation
-    setCollegeId(DEMO_CREDENTIALS[roleId].id);
-    setPassword(DEMO_CREDENTIALS[roleId].pass);
   };
 
   const handleSubmit = async (e) => {
@@ -129,26 +97,6 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
             </div>
           </div>
 
-          {/* One-Click Quick Demo Credentials Chip */}
-          <div className="mb-6 p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-xs text-slate-600">
-              <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
-              <span>
-                <strong>Demo:</strong> {DEMO_CREDENTIALS[selectedRole].desc}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setCollegeId(DEMO_CREDENTIALS[selectedRole].id);
-                setPassword(DEMO_CREDENTIALS[selectedRole].pass);
-              }}
-              className="text-[11px] font-semibold text-brand-600 hover:text-brand-700 underline"
-            >
-              Fill Demo
-            </button>
-          </div>
-
           {error && (
             <div className="mb-5 p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-start space-x-2 text-xs text-rose-700">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
@@ -167,7 +115,7 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
                 required
                 value={collegeId}
                 onChange={(e) => setCollegeId(e.target.value)}
-                placeholder={selectedRole === 'STUDENT' ? 'e.g. COER253028008' : 'e.g. WRD-101'}
+                placeholder={selectedRole === 'STUDENT' ? 'Enter Student ID / Roll No.' : 'Enter Official Employee ID'}
                 className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 uppercase font-mono"
               />
             </div>
