@@ -152,9 +152,9 @@ export default function GuardKiosk() {
   return (
     <div className="space-y-6">
       {/* Top Gate Kiosk Controls Bar */}
-      <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="flex items-center space-x-3">
-          <div className="h-12 w-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
+          <div className="h-12 w-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
             <Camera className="w-6 h-6" />
           </div>
           <div>
@@ -171,13 +171,13 @@ export default function GuardKiosk() {
         </div>
 
         {/* Gate & Scanner Pickers */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center space-x-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-            <MapPin className="w-4 h-4 text-slate-400" />
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+          <div className="flex items-center space-x-2 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 w-full sm:w-auto">
+            <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
             <select
               value={selectedGate}
               onChange={(e) => setSelectedGate(e.target.value)}
-              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none"
+              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none w-full"
             >
               {gates.map((g) => (
                 <option key={g._id} value={g.gate_code}>
@@ -187,12 +187,12 @@ export default function GuardKiosk() {
             </select>
           </div>
 
-          <div className="flex items-center space-x-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
-            <Sliders className="w-4 h-4 text-slate-400" />
+          <div className="flex items-center space-x-2 bg-slate-50 px-3 py-2 rounded-xl border border-slate-200 w-full sm:w-auto">
+            <Sliders className="w-4 h-4 text-slate-400 shrink-0" />
             <select
               value={selectedScanner}
               onChange={(e) => setSelectedScanner(e.target.value)}
-              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none"
+              className="bg-transparent text-xs font-bold text-slate-700 focus:outline-none w-full"
             >
               {scanners.map((s) => (
                 <option key={s._id} value={s.scanner_code}>
@@ -207,8 +207,8 @@ export default function GuardKiosk() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Interactive QR Scanner & Camera (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs">
-            <div className="flex items-center justify-between border-b pb-4 mb-4 border-slate-100">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-200 shadow-xs">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 mb-4 border-slate-100 gap-2">
               <h3 className="font-bold text-sm text-slate-800 flex items-center space-x-2">
                 <Camera className="w-4 h-4 text-brand-600" />
                 <span>Camera & Barcode Gun Scanner</span>
@@ -216,7 +216,7 @@ export default function GuardKiosk() {
 
               <button
                 onClick={toggleCamera}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
+                className={`w-full sm:w-auto text-center px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   isCameraActive
                     ? 'bg-rose-100 text-rose-800 border border-rose-300'
                     : 'bg-brand-50 text-brand-700 border border-brand-200 hover:bg-brand-100'
@@ -248,7 +248,7 @@ export default function GuardKiosk() {
                 Manual Permanent QR Input / Barcode Scanner
               </label>
 
-              <div className="flex space-x-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={manualQR}
@@ -259,7 +259,7 @@ export default function GuardKiosk() {
                 <button
                   onClick={() => handleScanSubmit(manualQR)}
                   disabled={processing}
-                  className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 disabled:opacity-50 transition-all flex items-center space-x-1.5"
+                  className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 disabled:opacity-50 transition-all flex items-center space-x-1.5"
                 >
                   <Zap className="w-3.5 h-3.5" />
                   <span>{processing ? 'Verifying...' : 'Scan'}</span>
@@ -311,7 +311,7 @@ export default function GuardKiosk() {
         {/* Right Column: Instant Verification Card & Operational Log (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
           {/* Big Instant Verification Card */}
-          <div className={`rounded-3xl p-6 sm:p-8 border shadow-md transition-all ${
+          <div className={`rounded-2xl sm:rounded-3xl p-4 sm:p-8 border shadow-md transition-all ${
             !lastScanResult
               ? 'bg-white border-slate-200'
               : lastScanResult.result === 'ALLOWED'
@@ -338,7 +338,7 @@ export default function GuardKiosk() {
             ) : (
               <div>
                 {/* Decision Banner */}
-                <div className={`flex items-center space-x-3 p-4 rounded-2xl mb-6 ${
+                <div className={`flex items-center space-x-3 p-3.5 sm:p-4 rounded-2xl mb-6 ${
                   lastScanResult.result === 'ALLOWED'
                     ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                     : 'bg-rose-600 text-white shadow-lg shadow-rose-600/30'
@@ -349,7 +349,7 @@ export default function GuardKiosk() {
                     <XCircle className="w-8 h-8 shrink-0" />
                   )}
                   <div>
-                    <div className="text-2xl font-black tracking-tight">
+                    <div className="text-lg min-[360px]:text-xl sm:text-2xl font-black tracking-tight">
                       {lastScanResult.result === 'ALLOWED'
                         ? `${lastScanResult.eventType} PERMITTED`
                         : 'MOVEMENT DENIED'}
@@ -364,7 +364,7 @@ export default function GuardKiosk() {
 
                 {/* Sanitized Operational Data (Strictly NO parent details!) */}
                 {lastScanResult.student ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-white/80 p-4 rounded-2xl border border-slate-200/70">
+                  <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-3 gap-3 text-xs bg-white/80 p-3.5 sm:p-4 rounded-2xl border border-slate-200/70">
                     <div>
                       <span className="text-slate-400 uppercase font-bold text-[10px] block">Student Name</span>
                       <span className="font-bold text-slate-900 text-sm">{lastScanResult.student.name}</span>
@@ -400,7 +400,7 @@ export default function GuardKiosk() {
           </div>
 
           {/* Recent Gate Scan Logs Table */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <History className="w-4 h-4 text-slate-500" />
@@ -416,13 +416,13 @@ export default function GuardKiosk() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[420px]">
                 <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                   <tr>
-                    <th className="px-4 py-2.5">Time</th>
-                    <th className="px-4 py-2.5">Student</th>
-                    <th className="px-4 py-2.5">Event</th>
-                    <th className="px-4 py-2.5">Result</th>
+                    <th className="px-4 py-2.5 whitespace-nowrap">Time</th>
+                    <th className="px-4 py-2.5 whitespace-nowrap">Student</th>
+                    <th className="px-4 py-2.5 whitespace-nowrap">Event</th>
+                    <th className="px-4 py-2.5 whitespace-nowrap">Result</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -435,17 +435,17 @@ export default function GuardKiosk() {
                   ) : (
                     gateLogs.map((log) => (
                       <tr key={log._id} className="hover:bg-slate-50/70">
-                        <td className="px-4 py-2.5 font-mono text-[11px] text-slate-500">
+                        <td className="px-4 py-2.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">
                           {new Date(log.scanned_at).toLocaleTimeString()}
                         </td>
-                        <td className="px-4 py-2.5">
+                        <td className="px-4 py-2.5 whitespace-nowrap">
                           <span className="font-bold text-slate-900 block">{log.student_id?.name || 'Unregistered'}</span>
                           <span className="font-mono text-[10px] text-slate-400">{log.student_id?.student_id || '-'}</span>
                         </td>
-                        <td className="px-4 py-2.5 font-semibold text-[11px]">
+                        <td className="px-4 py-2.5 font-semibold text-[11px] whitespace-nowrap">
                           {log.event_type}
                         </td>
-                        <td className="px-4 py-2.5">
+                        <td className="px-4 py-2.5 whitespace-nowrap">
                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                             log.result === 'ALLOWED' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
                           }`}>

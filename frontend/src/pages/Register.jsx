@@ -77,7 +77,7 @@ export default function Register({ onBackToLogin }) {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed py-12 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-cover bg-center bg-fixed py-6 sm:py-12 px-3 sm:px-6 lg:px-8"
       style={{
         backgroundImage: "url('/campus-building.png')"
       }}
@@ -85,13 +85,13 @@ export default function Register({ onBackToLogin }) {
       <div className="max-w-3xl mx-auto">
         <button
           onClick={onBackToLogin}
-          className="flex items-center space-x-2 text-slate-300 hover:text-white mb-6 text-xs font-semibold transition-colors"
+          className="flex items-center space-x-2 text-slate-300 hover:text-white mb-4 sm:mb-6 text-xs font-semibold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Portal Login</span>
         </button>
 
-        <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 border border-slate-100">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 lg:p-10 border border-slate-100">
           <div className="text-center border-b pb-6 mb-6 border-slate-100">
             <div className="inline-flex h-16 w-16 rounded-full bg-white border border-slate-100 items-center justify-center mb-2 p-1 shadow-sm">
               <img src="/coer-logo.png" alt="COER University logo" className="h-full w-full object-contain rounded-full" />

@@ -171,22 +171,22 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
       {/* SUB-VIEW 1: Dashboard Overview & Hostel Breakdown */}
       {activeTab === 'dashboard' && (
         <div className="space-y-6">
-          <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs flex items-center justify-between">
+          <div className="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-base font-bold text-slate-900">Dean of Student Welfare Administration</h3>
               <p className="text-xs text-slate-500">Institute-wide movement monitoring, curfew compliance, and reports</p>
             </div>
 
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:space-x-3 w-full sm:w-auto">
               <button
                 onClick={() => setNoticeModalOpen(true)}
-                className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors text-center"
               >
                 Publish Campus Notice
               </button>
               <button
                 onClick={handleExportCSV}
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
+                className="w-full sm:w-auto flex items-center justify-center space-x-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
               >
                 <Download className="w-4 h-4" />
                 <span>Export Outpass Records (CSV)</span>
@@ -196,20 +196,20 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
 
           {/* Hostel Occupancy & Movement Breakdown Table */}
           <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-5 border-b border-slate-100">
+            <div className="p-4 sm:p-5 border-b border-slate-100">
               <h4 className="font-bold text-slate-800 text-sm">Hostel-wise Movement Distribution</h4>
               <p className="text-xs text-slate-500">Live tally of students inside vs outside for each residence bhawan</p>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[500px]">
                 <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                   <tr>
-                    <th className="px-5 py-3">Hostel Bhawan</th>
-                    <th className="px-5 py-3">Total Residents</th>
-                    <th className="px-5 py-3">Inside Hostel</th>
-                    <th className="px-5 py-3">Currently Outside</th>
-                    <th className="px-5 py-3">Outside Ratio</th>
+                    <th className="px-5 py-3 whitespace-nowrap">Hostel Bhawan</th>
+                    <th className="px-5 py-3 whitespace-nowrap">Total Residents</th>
+                    <th className="px-5 py-3 whitespace-nowrap">Inside Hostel</th>
+                    <th className="px-5 py-3 whitespace-nowrap">Currently Outside</th>
+                    <th className="px-5 py-3 whitespace-nowrap">Outside Ratio</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -217,11 +217,11 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
                     const ratio = h.total > 0 ? Math.round((h.outside / h.total) * 100) : 0;
                     return (
                       <tr key={h._id} className="hover:bg-slate-50/70">
-                        <td className="px-5 py-3 font-bold text-slate-900">{h._id}</td>
-                        <td className="px-5 py-3 font-mono font-semibold">{h.total}</td>
-                        <td className="px-5 py-3 font-mono text-emerald-600 font-bold">{h.inside}</td>
-                        <td className="px-5 py-3 font-mono text-amber-600 font-bold">{h.outside}</td>
-                        <td className="px-5 py-3">
+                        <td className="px-5 py-3 font-bold text-slate-900 whitespace-nowrap">{h._id}</td>
+                        <td className="px-5 py-3 font-mono font-semibold whitespace-nowrap">{h.total}</td>
+                        <td className="px-5 py-3 font-mono text-emerald-600 font-bold whitespace-nowrap">{h.inside}</td>
+                        <td className="px-5 py-3 font-mono text-amber-600 font-bold whitespace-nowrap">{h.outside}</td>
+                        <td className="px-5 py-3 whitespace-nowrap">
                           <div className="w-32 bg-slate-100 rounded-full h-2 overflow-hidden">
                             <div
                               className="bg-brand-500 h-2 rounded-full"
@@ -243,21 +243,21 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
       {/* SUB-VIEW 2: Approvals Queue */}
       {activeTab === 'approvals' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-4 sm:p-6 border-b border-slate-100">
             <h3 className="font-bold text-slate-800 text-base">Campus Outpass & Leave Approval Queue</h3>
             <p className="text-xs text-slate-500">Institute-wide review for Home Leave, Emergency, and Escalated passes</p>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[650px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3.5">Student</th>
-                  <th className="px-5 py-3.5">Leave Type</th>
-                  <th className="px-5 py-3.5">Hostel & Room</th>
-                  <th className="px-5 py-3.5">Destination & Reason</th>
-                  <th className="px-5 py-3.5">Requested Timing</th>
-                  <th className="px-5 py-3.5 text-right">Dean Action</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Student</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Leave Type</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Hostel & Room</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Destination & Reason</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Requested Timing</th>
+                  <th className="px-5 py-3.5 text-right whitespace-nowrap">Dean Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -270,25 +270,25 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
                 ) : (
                   pendingRequests.map((p) => (
                     <tr key={p._id} className="hover:bg-slate-50/70">
-                      <td className="px-5 py-3.5">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
                         <span className="font-bold text-slate-900 block">{p.student_id?.name}</span>
                         <span className="font-mono text-slate-500 text-[11px]">{p.student_id?.student_id}</span>
                       </td>
-                      <td className="px-5 py-3.5">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
                         <span className="font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px]">
                           {p.type}
                         </span>
                       </td>
-                      <td className="px-5 py-3.5">{p.student_id?.hostel} - Rm {p.student_id?.room}</td>
+                      <td className="px-5 py-3.5 whitespace-nowrap">{p.student_id?.hostel} - Rm {p.student_id?.room}</td>
                       <td className="px-5 py-3.5">
                         <span className="font-semibold text-slate-800 block">{p.destination}</span>
                         <span className="text-[11px] text-slate-500">{p.reason}</span>
                       </td>
-                      <td className="px-5 py-3.5 font-mono text-[11px]">
+                      <td className="px-5 py-3.5 font-mono text-[11px] whitespace-nowrap">
                         <div>{new Date(p.requested_start_time).toLocaleDateString()}</div>
                         <div className="text-slate-500">{new Date(p.requested_start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(p.requested_end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                       </td>
-                      <td className="px-5 py-3.5 text-right space-x-2">
+                      <td className="px-5 py-3.5 text-right space-x-2 whitespace-nowrap">
                         <button
                           onClick={() => handleApprove(p._id)}
                           className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs"
@@ -314,20 +314,20 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
       {/* SUB-VIEW 3: Grace & Late Returns */}
       {activeTab === 'grace-late' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-4 sm:p-6 border-b border-slate-100">
             <h3 className="font-bold text-slate-800 text-base">Campus Late Returns & Curfew Violations</h3>
             <p className="text-xs text-slate-500 mt-0.5">Comprehensive list of overdue students who exceeded the 15-minute grace period</p>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[580px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3.5">Student</th>
-                  <th className="px-5 py-3.5">Hostel & Room</th>
-                  <th className="px-5 py-3.5">Expiry Deadline</th>
-                  <th className="px-5 py-3.5">Movement Status</th>
-                  <th className="px-5 py-3.5">Delay Duration</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Student</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Hostel & Room</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Expiry Deadline</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Movement Status</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Delay Duration</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -340,17 +340,17 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
                 ) : (
                   graceAndLateList.map((item, idx) => (
                     <tr key={idx} className="hover:bg-slate-50/70">
-                      <td className="px-5 py-3.5 font-bold text-slate-900">
+                      <td className="px-5 py-3.5 font-bold text-slate-900 whitespace-nowrap">
                         {item.student?.name} ({item.student?.student_id})
                       </td>
-                      <td className="px-5 py-3.5">{item.student?.hostel} - Rm {item.student?.room}</td>
-                      <td className="px-5 py-3.5 font-mono text-[11px]">
+                      <td className="px-5 py-3.5 whitespace-nowrap">{item.student?.hostel} - Rm {item.student?.room}</td>
+                      <td className="px-5 py-3.5 font-mono text-[11px] whitespace-nowrap">
                         {new Date(item.outpass?.expires_at).toLocaleTimeString()}
                       </td>
-                      <td className="px-5 py-3.5">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
                         <StatusBadge status={item.student?.movement_status} />
                       </td>
-                      <td className="px-5 py-3.5 font-mono font-bold text-rose-600">
+                      <td className="px-5 py-3.5 font-mono font-bold text-rose-600 whitespace-nowrap">
                         {item.lateMinutes > 0 ? `+${item.lateMinutes} mins Overdue` : 'Within Grace'}
                       </td>
                     </tr>

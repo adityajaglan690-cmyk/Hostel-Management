@@ -18,6 +18,7 @@ export default function App() {
   const [authView, setAuthView] = useState('login'); // 'login' | 'register'
   const [registerRole, setRegisterRole] = useState('WARDEN');
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   if (loading) {
     return (
@@ -74,13 +75,24 @@ export default function App() {
 
   return (
     <SocketProvider>
-      <div className="min-h-screen bg-slate-50/50 flex flex-col">
-        <Navbar />
-        <div className="flex-1 flex max-w-7xl w-full mx-auto">
+      <div className="min-h-screen bg-slate-50/50 flex flex-col overflow-x-hidden">
+        <Navbar 
+          onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
+          isMobileMenuOpen={mobileMenuOpen}
+        />
+        <div className="flex-1 flex max-w-7xl w-full mx-auto relative">
           {user.role !== 'SECURITY_GUARD' && (
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Sidebar 
+              activeTab={activeTab} 
+              setActiveTab={(tab) => {
+                setActiveTab(tab);
+                setMobileMenuOpen(false);
+              }}
+              isOpen={mobileMenuOpen}
+              onClose={() => setMobileMenuOpen(false)}
+            />
           )}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <main className="flex-1 p-3.5 sm:p-6 lg:p-8 overflow-y-auto min-w-0 w-full">
             {renderPortal()}
           </main>
         </div>

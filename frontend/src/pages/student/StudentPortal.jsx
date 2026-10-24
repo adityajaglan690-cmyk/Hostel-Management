@@ -221,7 +221,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
         <button
           onClick={() => setActiveTab('permanent-qr')}
-          className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 shadow-xs hover:bg-slate-50 transition-colors"
+          className="flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800 shadow-xs hover:bg-slate-50 transition-colors w-full sm:w-auto justify-center"
         >
           <span>View Permanent QR ID</span>
         </button>
@@ -340,7 +340,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
       {/* SUB-VIEW 2: Apply Outpass (Day Pass) */}
       {activeTab === 'apply-outpass' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs">
+        <div className="max-w-2xl bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs">
           <div className="border-b pb-4 mb-6 border-slate-100">
             <h3 className="font-bold text-slate-900 text-base flex items-center space-x-2">
               <FileText className="w-5 h-5 text-brand-600" />
@@ -403,7 +403,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 type="submit"
-                className="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 transition-all"
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 transition-all"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Outpass Application</span>
@@ -415,7 +415,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
       {/* SUB-VIEW 3: Apply Home Leave (Flexible Duration) */}
       {activeTab === 'apply-home' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs">
+        <div className="max-w-2xl bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-200 shadow-xs">
           <div className="border-b pb-4 mb-6 border-slate-100">
             <h3 className="font-bold text-slate-900 text-base flex items-center space-x-2">
               <Home className="w-5 h-5 text-purple-600" />
@@ -489,7 +489,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
             {/* Calculated Dynamic Duration Preview */}
             {calculateHomeLeaveDuration() && (
-              <div className="p-3 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-between text-xs text-purple-900">
+              <div className="p-3 rounded-xl bg-purple-50 border border-purple-200 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-purple-900">
                 <span className="font-bold">Calculated Duration:</span>
                 <span className="font-mono font-extrabold">{calculateHomeLeaveDuration()}</span>
               </div>
@@ -498,7 +498,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 type="submit"
-                className="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md shadow-purple-500/20 transition-all"
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md shadow-purple-500/20 transition-all"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Home Leave Application</span>
@@ -510,7 +510,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
       {/* SUB-VIEW 4: Apply Emergency Leave */}
       {activeTab === 'apply-emergency' && (
-        <div className="max-w-2xl bg-white rounded-3xl p-6 sm:p-8 border border-rose-200 shadow-xs">
+        <div className="max-w-2xl bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-rose-200 shadow-xs">
           <div className="border-b pb-4 mb-6 border-rose-100">
             <h3 className="font-bold text-rose-900 text-base flex items-center space-x-2">
               <AlertOctagon className="w-5 h-5 text-rose-600" />
@@ -573,7 +573,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
             <div className="pt-4 border-t border-slate-100 flex justify-end">
               <button
                 type="submit"
-                className="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md shadow-rose-500/20 transition-all"
+                className="w-full sm:w-auto flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-md shadow-rose-500/20 transition-all"
               >
                 <AlertOctagon className="w-4 h-4" />
                 <span>Submit Emergency Request</span>
@@ -586,7 +586,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
       {/* SUB-VIEW 5: My Outpass History Table */}
       {activeTab === 'my-passes' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+          <div className="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <h3 className="font-bold text-slate-800 text-base">My Outpass & Leave Records</h3>
               <p className="text-xs text-slate-500 mt-0.5">Historical log of all pass requests and actual return times</p>
@@ -594,7 +594,7 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
 
             <button
               onClick={() => setActiveTab('apply-outpass')}
-              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
+              className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors w-full sm:w-auto justify-center"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>New Outpass</span>
@@ -602,15 +602,15 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[640px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3.5">Type & Reason</th>
-                  <th className="px-5 py-3.5">Destination</th>
-                  <th className="px-5 py-3.5">Approved Window</th>
-                  <th className="px-5 py-3.5">Actual Return</th>
-                  <th className="px-5 py-3.5">Status</th>
-                  <th className="px-5 py-3.5 text-right">Actions</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Type & Reason</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Destination</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Approved Window</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Actual Return</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Status</th>
+                  <th className="px-5 py-3.5 text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -623,18 +623,18 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
                 ) : (
                   outpasses.map((o) => (
                     <tr key={o._id} className="hover:bg-slate-50/70 transition-colors">
-                      <td className="px-5 py-3.5">
+                      <td className="px-5 py-3.5 min-w-[140px]">
                         <span className="font-bold text-slate-900 block">{o.type}</span>
                         <span className="text-[11px] text-slate-500 line-clamp-1">{o.reason}</span>
                       </td>
-                      <td className="px-5 py-3.5 font-medium">{o.destination}</td>
-                      <td className="px-5 py-3.5 font-mono text-[11px]">
+                      <td className="px-5 py-3.5 font-medium min-w-[120px]">{o.destination}</td>
+                      <td className="px-5 py-3.5 font-mono text-[11px] whitespace-nowrap">
                         <div>{new Date(o.approved_start_time || o.requested_start_time).toLocaleDateString()}</div>
                         <div className="text-slate-500">
                           {new Date(o.approved_start_time || o.requested_start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(o.approved_end_time || o.requested_end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       </td>
-                      <td className="px-5 py-3.5 font-mono text-[11px]">
+                      <td className="px-5 py-3.5 font-mono text-[11px] whitespace-nowrap">
                         {o.actual_return ? (
                           <div>
                             <span className="font-bold">{new Date(o.actual_return).toLocaleTimeString()}</span>
@@ -646,10 +646,10 @@ export default function StudentPortal({ activeTab, setActiveTab }) {
                           <span className="text-slate-400">-</span>
                         )}
                       </td>
-                      <td className="px-5 py-3.5">
+                      <td className="px-5 py-3.5 whitespace-nowrap">
                         <StatusBadge status={o.status} />
                       </td>
-                      <td className="px-5 py-3.5 text-right space-x-2">
+                      <td className="px-5 py-3.5 text-right space-x-2 whitespace-nowrap">
                         {['PENDING', 'APPROVED'].includes(o.status) && !o.first_exit_at && (
                           <button
                             onClick={() => handleCancelOutpass(o._id)}

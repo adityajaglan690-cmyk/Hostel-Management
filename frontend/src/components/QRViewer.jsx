@@ -38,7 +38,7 @@ export default function QRViewer({ student }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs max-w-sm mx-auto text-center">
+    <div className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-xs max-w-sm mx-auto text-center">
       <div className="flex items-center justify-between border-b pb-3 mb-4 border-slate-100">
         <div className="flex items-center space-x-2">
           <QrCode className="w-5 h-5 text-brand-600" />
@@ -50,13 +50,14 @@ export default function QRViewer({ student }) {
       </div>
 
       {/* QR Code Presentation Box */}
-      <div className="bg-slate-50 p-6 rounded-2xl inline-block border border-slate-100 shadow-inner my-2">
+      <div className="bg-slate-50 p-4 sm:p-6 rounded-2xl inline-block border border-slate-100 shadow-inner my-2 max-w-full">
         <QRCodeSVG
           id="student-qr-svg"
           value={qrValue}
           size={180}
           level="H"
           includeMargin={true}
+          className="max-w-full h-auto"
         />
       </div>
 
@@ -64,12 +65,12 @@ export default function QRViewer({ student }) {
       <div className="mt-3">
         <span className="text-[11px] uppercase font-bold text-slate-400 tracking-wider block">Identity Key</span>
         <div className="flex items-center justify-center space-x-2 mt-1">
-          <code className="text-xs font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200">
+          <code className="text-xs font-mono font-bold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 break-all">
             {qrValue}
           </code>
           <button
             onClick={handleCopy}
-            className="p-1 text-slate-400 hover:text-brand-600 hover:bg-brand-50 rounded-md transition-colors"
+            className="p-1 text-slate-400 hover:text-brand-600 hover:bg-brand-50 rounded-md transition-colors shrink-0"
             title="Copy QR Code string"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}

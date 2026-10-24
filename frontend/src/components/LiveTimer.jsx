@@ -78,7 +78,7 @@ export default function LiveTimer({ outpass, movementStatus }) {
   const approvedEnd = new Date(outpass.approved_end_time || outpass.requested_end_time);
 
   return (
-    <div className={`rounded-2xl p-6 border shadow-sm transition-all ${
+    <div className={`rounded-2xl p-4 sm:p-6 border shadow-sm transition-all ${
       timeLeft.mode === 'LATE'
         ? 'bg-rose-50 border-rose-200'
         : timeLeft.mode === 'GRACE'
@@ -87,15 +87,15 @@ export default function LiveTimer({ outpass, movementStatus }) {
         ? 'bg-orange-50 border-orange-200'
         : 'bg-white border-slate-200'
     }`}>
-      <div className="flex items-center justify-between border-b pb-4 mb-4 border-slate-100">
+      <div className="flex flex-col min-[420px]:flex-row min-[420px]:items-center justify-between gap-2 border-b pb-4 mb-4 border-slate-100">
         <div className="flex items-center space-x-2">
-          <Clock className={`w-5 h-5 ${
+          <Clock className={`w-5 h-5 shrink-0 ${
             timeLeft.mode === 'LATE' ? 'text-rose-600' : timeLeft.mode === 'GRACE' ? 'text-amber-600' : 'text-brand-600'
           }`} />
           <span className="font-bold text-sm text-slate-800">Authoritative Live Timer</span>
         </div>
 
-        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+        <span className={`self-start min-[420px]:self-auto text-[10px] sm:text-xs font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap ${
           timeLeft.mode === 'LATE'
             ? 'bg-rose-100 text-rose-800'
             : timeLeft.mode === 'GRACE'
@@ -118,7 +118,7 @@ export default function LiveTimer({ outpass, movementStatus }) {
       <div className="text-center my-3">
         {timeLeft.mode === 'LATE' ? (
           <div>
-            <div className="text-4xl sm:text-5xl font-extrabold font-mono text-rose-600">
+            <div className="text-2xl min-[360px]:text-3xl sm:text-5xl font-extrabold font-mono text-rose-600 tracking-tight">
               +{timeLeft.minutes}m OVERDUE
             </div>
             <p className="text-xs text-rose-700 font-medium mt-1">
@@ -127,7 +127,7 @@ export default function LiveTimer({ outpass, movementStatus }) {
           </div>
         ) : timeLeft.mode === 'GRACE' ? (
           <div>
-            <div className="text-4xl sm:text-5xl font-extrabold font-mono text-amber-600">
+            <div className="text-3xl min-[360px]:text-4xl sm:text-5xl font-extrabold font-mono text-amber-600 tracking-tight">
               {pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}
             </div>
             <p className="text-xs text-amber-700 font-semibold mt-1">
@@ -136,7 +136,7 @@ export default function LiveTimer({ outpass, movementStatus }) {
           </div>
         ) : (
           <div>
-            <div className="text-4xl sm:text-5xl font-extrabold font-mono text-slate-900 tracking-tight">
+            <div className="text-3xl min-[360px]:text-4xl sm:text-5xl font-extrabold font-mono text-slate-900 tracking-tight">
               {pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}
             </div>
             <p className="text-xs text-slate-500 font-medium mt-1">Remaining Time to Return</p>

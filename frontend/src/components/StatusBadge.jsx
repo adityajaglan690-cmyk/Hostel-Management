@@ -77,7 +77,7 @@ export default function StatusBadge({ status }) {
   const Icon = config.icon;
 
   return (
-    <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${config.bg}`}>
+    <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border whitespace-nowrap ${config.bg}`}>
       <Icon className="w-3 h-3" />
       <span>{config.label}</span>
     </span>

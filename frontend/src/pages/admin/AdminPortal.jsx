@@ -367,42 +367,42 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[700px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3.5">Student Details</th>
-                  <th className="px-5 py-3.5">Hostel & Room</th>
-                  <th className="px-5 py-3.5">Permanent QR Identity</th>
-                  <th className="px-5 py-3.5">Movement</th>
-                  <th className="px-5 py-3.5">QR Status</th>
-                  <th className="px-5 py-3.5 text-right">QR Actions</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Student Details</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Hostel & Room</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Permanent QR Identity</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Movement</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">QR Status</th>
+                  <th className="px-5 py-3.5 text-right whitespace-nowrap">QR Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {students.map((s) => (
                   <tr key={s._id} className="hover:bg-slate-50/70">
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <span className="font-bold text-slate-900 block">{s.name}</span>
                       <span className="font-mono text-slate-500 text-[11px]">{s.student_id}</span>
                       <span className="text-[10px] text-slate-400 block">{s.course}</span>
                     </td>
-                    <td className="px-5 py-3.5 font-medium">
+                    <td className="px-5 py-3.5 font-medium whitespace-nowrap">
                       {s.hostel} - Rm {s.room} (Blk {s.block})
                     </td>
-                    <td className="px-5 py-3.5 font-mono text-[11px] text-brand-700 font-semibold">
+                    <td className="px-5 py-3.5 font-mono text-[11px] text-brand-700 font-semibold whitespace-nowrap">
                       {s.permanent_qr_id}
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <StatusBadge status={s.movement_status} />
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         s.qr_status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
                       }`}>
                         {s.qr_status}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-right space-x-1.5">
+                    <td className="px-5 py-3.5 text-right space-x-1.5 whitespace-nowrap">
                       {s.qr_status === 'ACTIVE' ? (
                         <button
                           onClick={() => handleRevokeQR(s._id)}
@@ -444,7 +444,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
       {/* SUB-VIEW 2: Staff User Provisioning */}
       {activeTab === 'users' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+          <div className="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="font-bold text-slate-800 text-base">Authorized Staff User Management</h3>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -454,7 +454,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
 
             <button
               onClick={() => setCreateUserModal(true)}
-              className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
+              className="w-full sm:w-auto justify-center flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
             >
               <UserPlus className="w-4 h-4" />
               <span>Provision Staff User</span>
@@ -462,39 +462,39 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[650px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3.5">Name & Official ID</th>
-                  <th className="px-5 py-3.5">Official Email</th>
-                  <th className="px-5 py-3.5">Phone</th>
-                  <th className="px-5 py-3.5">Database Role</th>
-                  <th className="px-5 py-3.5">Status</th>
-                  <th className="px-5 py-3.5 text-right">Actions</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Name & Official ID</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Official Email</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Phone</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Database Role</th>
+                  <th className="px-5 py-3.5 whitespace-nowrap">Status</th>
+                  <th className="px-5 py-3.5 text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {staffUsers.map((u) => (
                   <tr key={u._id} className="hover:bg-slate-50/70">
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <span className="font-bold text-slate-900 block">{u.name}</span>
                       <span className="font-mono text-slate-500 text-[11px]">{u.college_id}</span>
                     </td>
-                    <td className="px-5 py-3.5">{u.official_email}</td>
-                    <td className="px-5 py-3.5 font-mono">{u.phone}</td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">{u.official_email}</td>
+                    <td className="px-5 py-3.5 font-mono whitespace-nowrap">{u.phone}</td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
                         {u.role}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5">
+                    <td className="px-5 py-3.5 whitespace-nowrap">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         u.status === 'ACTIVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
                       }`}>
                         {u.status}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-right">
+                    <td className="px-5 py-3.5 text-right whitespace-nowrap">
                       <button
                         onClick={() => handleToggleUserStatus(u._id)}
                         className="px-2.5 py-1 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-[11px] font-semibold"
@@ -514,15 +514,15 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
       {activeTab === 'gates' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Gates Management */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-6">
-            <div className="flex items-center justify-between border-b pb-4 mb-4 border-slate-100">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 mb-4 border-slate-100 gap-3">
               <div>
                 <h3 className="font-bold text-slate-800 text-sm">Gate Management</h3>
                 <p className="text-[11px] text-slate-500">Physical campus checkpoints and operational states</p>
               </div>
               <button
                 onClick={() => setCreateGateModal(true)}
-                className="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold"
+                className="w-full sm:w-auto justify-center flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Gate</span>
@@ -531,7 +531,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
 
             <div className="space-y-3">
               {gates.map((g) => (
-                <div key={g._id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/70 flex items-center justify-between">
+                <div key={g._id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="font-mono font-bold text-slate-900 text-xs">{g.gate_code}</span>
@@ -540,7 +540,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
                     <span className="text-[11px] text-slate-500 block mt-0.5">{g.location}</span>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-end">
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                       g.status === 'OPEN' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
                     }`}>
@@ -559,15 +559,15 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
           </div>
 
           {/* Scanners Management */}
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-6">
-            <div className="flex items-center justify-between border-b pb-4 mb-4 border-slate-100">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 mb-4 border-slate-100 gap-3">
               <div>
                 <h3 className="font-bold text-slate-800 text-sm">Fixed Gate Scanners</h3>
                 <p className="text-[11px] text-slate-500">Hardware devices authenticated with hashed API credentials</p>
               </div>
               <button
                 onClick={() => setCreateScannerModal(true)}
-                className="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold"
+                className="w-full sm:w-auto justify-center flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Register Scanner</span>
@@ -576,7 +576,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
 
             <div className="space-y-3">
               {scanners.map((s) => (
-                <div key={s._id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/70 flex items-center justify-between">
+                <div key={s._id} className="p-4 rounded-2xl border border-slate-100 bg-slate-50/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="font-mono font-bold text-slate-900 text-xs">{s.scanner_code}</span>
@@ -587,7 +587,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
                     </span>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-end">
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
                       {s.status}
                     </span>
@@ -607,7 +607,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
 
       {/* SUB-VIEW 4: Bulk CSV Import */}
       {activeTab === 'bulk-import' && (
-        <div className="max-w-3xl bg-white rounded-3xl border border-slate-200 shadow-xs p-6 sm:p-8 space-y-5">
+        <div className="max-w-3xl bg-white rounded-3xl border border-slate-200 shadow-xs p-4 sm:p-8 space-y-5">
           <div>
             <h3 className="font-bold text-slate-800 text-base flex items-center space-x-2">
               <FileSpreadsheet className="w-5 h-5 text-brand-600" />
@@ -639,7 +639,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
             <button
               onClick={handleBulkImport}
               disabled={importing}
-              className="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 disabled:opacity-50"
+              className="w-full sm:w-auto justify-center flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md shadow-brand-500/20 disabled:opacity-50"
             >
               <Upload className="w-4 h-4" />
               <span>{importing ? 'Processing Batch Rows...' : 'Execute Bulk Import'}</span>
@@ -649,7 +649,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
           {importResult && (
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2">
               <h4 className="font-bold text-slate-800">Bulk Import Results</h4>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <div className="bg-white p-2 rounded-xl border">Total: <strong>{importResult.total}</strong></div>
                 <div className="bg-emerald-50 text-emerald-800 p-2 rounded-xl border border-emerald-200">
                   Imported: <strong>{importResult.successCount}</strong>
@@ -674,34 +674,34 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
       {/* SUB-VIEW 5: Audit Trail & Security Events */}
       {activeTab === 'audit-logs' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-4 sm:p-6 border-b border-slate-100">
             <h3 className="font-bold text-slate-800 text-base">Administrative Audit Trail</h3>
             <p className="text-xs text-slate-500 mt-0.5">Immutable record of approvals, rejections, parent modifications, and overrides</p>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[650px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3">Timestamp</th>
-                  <th className="px-5 py-3">Actor</th>
-                  <th className="px-5 py-3">Action</th>
-                  <th className="px-5 py-3">Entity</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Timestamp</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Actor</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Action</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Entity</th>
                   <th className="px-5 py-3">Audit Reason</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {auditLogs.map((log) => (
                   <tr key={log._id} className="hover:bg-slate-50/70">
-                    <td className="px-5 py-3 font-mono text-[11px] text-slate-500">
+                    <td className="px-5 py-3 font-mono text-[11px] text-slate-500 whitespace-nowrap">
                       {new Date(log.createdAt).toLocaleString()}
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-5 py-3 whitespace-nowrap">
                       <span className="font-bold text-slate-900 block">{log.actor_name}</span>
                       <span className="text-[10px] text-slate-400">{log.actor_role}</span>
                     </td>
-                    <td className="px-5 py-3 font-semibold text-brand-700">{log.action}</td>
-                    <td className="px-5 py-3 font-mono text-[11px]">{log.entity_type}</td>
+                    <td className="px-5 py-3 font-semibold text-brand-700 whitespace-nowrap">{log.action}</td>
+                    <td className="px-5 py-3 font-mono text-[11px] whitespace-nowrap">{log.entity_type}</td>
                     <td className="px-5 py-3 text-slate-600 max-w-sm">{log.reason || '-'}</td>
                   </tr>
                 ))}
@@ -714,7 +714,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
       {/* SUB-VIEW 6: Security Events */}
       {activeTab === 'security' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
-          <div className="p-6 border-b border-slate-100">
+          <div className="p-4 sm:p-6 border-b border-slate-100">
             <h3 className="font-bold text-slate-800 text-base">Real-Time Security Events Monitor</h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Tracks wrong-role logins, fake scanner attempts, invalid QR scans, and replay attempts
@@ -722,24 +722,24 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[650px]">
               <thead className="bg-slate-50 text-slate-400 uppercase font-bold text-[10px] border-b border-slate-200">
                 <tr>
-                  <th className="px-5 py-3">Timestamp</th>
-                  <th className="px-5 py-3">Event Type</th>
-                  <th className="px-5 py-3">Severity</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Timestamp</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Event Type</th>
+                  <th className="px-5 py-3 whitespace-nowrap">Severity</th>
                   <th className="px-5 py-3">Description</th>
-                  <th className="px-5 py-3">IP Address</th>
+                  <th className="px-5 py-3 whitespace-nowrap">IP Address</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {securityEvents.map((e) => (
                   <tr key={e._id} className="hover:bg-slate-50/70">
-                    <td className="px-5 py-3 font-mono text-[11px] text-slate-500">
+                    <td className="px-5 py-3 font-mono text-[11px] text-slate-500 whitespace-nowrap">
                       {new Date(e.createdAt).toLocaleTimeString()}
                     </td>
-                    <td className="px-5 py-3 font-bold text-slate-800">{e.event_type}</td>
-                    <td className="px-5 py-3">
+                    <td className="px-5 py-3 font-bold text-slate-800 whitespace-nowrap">{e.event_type}</td>
+                    <td className="px-5 py-3 whitespace-nowrap">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                         e.severity === 'HIGH' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800'
                       }`}>
@@ -747,7 +747,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
                       </span>
                     </td>
                     <td className="px-5 py-3 text-slate-600">{e.description}</td>
-                    <td className="px-5 py-3 font-mono text-slate-400">{e.ip_address || '127.0.0.1'}</td>
+                    <td className="px-5 py-3 font-mono text-slate-400 whitespace-nowrap">{e.ip_address || '127.0.0.1'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -786,7 +786,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Official Email</label>
               <input
@@ -809,7 +809,7 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Role</label>
               <select

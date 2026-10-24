@@ -5,8 +5,8 @@ export default function Pagination({ page, pages, total, limit, onPageChange }) 
   if (pages <= 1 && total <= limit) return null;
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-slate-200 sm:px-6 rounded-b-2xl">
-      <div className="text-xs text-slate-500">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 py-3 bg-white border-t border-slate-200 sm:px-6 rounded-b-2xl">
+      <div className="text-xs text-slate-500 text-center sm:text-left">
         Showing <span className="font-semibold text-slate-700">{(page - 1) * limit + 1}</span> to{' '}
         <span className="font-semibold text-slate-700">{Math.min(page * limit, total)}</span> of{' '}
         <span className="font-semibold text-slate-700">{total}</span> records

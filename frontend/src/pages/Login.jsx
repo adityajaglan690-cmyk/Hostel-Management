@@ -50,31 +50,31 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-fixed flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+      className="min-h-screen bg-cover bg-center bg-fixed flex flex-col justify-center py-6 sm:py-12 px-3 sm:px-6 lg:px-8"
       style={{
         backgroundImage: "url('/campus-building.png')"
       }}
     >
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex h-20 w-20 rounded-full bg-white items-center justify-center shadow-xl mb-3 p-1">
+        <div className="inline-flex h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-white items-center justify-center shadow-xl mb-3 p-1">
           <img src="/coer-logo.png" alt="COER University logo" className="h-full w-full object-contain rounded-full" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg">
+        <h2 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg px-2">
           Hostel Outpass Portal
         </h2>
-        <p className="mt-1 text-xs sm:text-sm text-white drop-shadow-md">
+        <p className="mt-1 text-xs sm:text-sm text-white drop-shadow-md px-2">
           Official College & Resident Gate Movement Management System
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-xl px-4 sm:px-0">
-        <div className="bg-white py-8 px-6 shadow-2xl rounded-3xl sm:px-10 border border-slate-100">
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-xl px-0">
+        <div className="bg-white py-6 px-4 sm:py-8 sm:px-10 shadow-2xl rounded-2xl sm:rounded-3xl border border-slate-100">
           {/* Role Tabs */}
           <div className="mb-6">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
               Select Official Portal
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 min-[440px]:grid-cols-3 sm:grid-cols-5 gap-1.5 sm:gap-2">
               {roles.map((r) => {
                 const Icon = r.icon;
                 const isSelected = selectedRole === r.id;
@@ -83,14 +83,14 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
                     key={r.id}
                     type="button"
                     onClick={() => handleRoleChange(r.id)}
-                    className={`flex flex-col items-center justify-center p-2.5 rounded-xl border text-xs font-semibold transition-all ${
+                    className={`flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border text-xs font-semibold transition-all min-w-0 ${
                       isSelected
                         ? 'border-brand-600 bg-brand-50 text-brand-700 shadow-xs ring-2 ring-brand-600/20'
                         : 'border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300'
                     }`}
                   >
-                    <Icon className={`w-4 h-4 mb-1.5 ${isSelected ? 'text-brand-600' : 'text-slate-400'}`} />
-                    <span className="text-[11px] text-center leading-tight">{r.label}</span>
+                    <Icon className={`w-4 h-4 mb-1.5 shrink-0 ${isSelected ? 'text-brand-600' : 'text-slate-400'}`} />
+                    <span className="text-[10px] sm:text-[11px] text-center leading-tight truncate w-full">{r.label}</span>
                   </button>
                 );
               })}
