@@ -10,6 +10,7 @@ router.use(authenticate);
 // Notices
 router.get('/notices', CommonControllers.getNotices);
 router.post('/notices', authorize(ROLES.WARDEN, ROLES.DEAN, ROLES.ADMIN), CommonControllers.createNotice);
+router.put('/notices/:id', authorize(ROLES.WARDEN, ROLES.DEAN, ROLES.ADMIN), CommonControllers.updateNotice);
 
 // Incidents
 router.get('/incidents', authorize(ROLES.WARDEN, ROLES.DEAN, ROLES.ADMIN, ROLES.SECURITY_GUARD), CommonControllers.getIncidents);

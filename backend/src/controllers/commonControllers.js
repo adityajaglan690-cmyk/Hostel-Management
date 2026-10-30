@@ -10,12 +10,35 @@ class CommonControllers {
       const userRole = req.user.role;
       const query = {
         is_active: true,
-        $or: [{ target_role: 'ALL' }, { target_role: userRole }]
+        $or: [{ target_role: 'ALL' }, { target_role: userRole }, { published_by: req.user._id }]
       };
       const notices = await Notice.find(query).populate('published_by', 'name role').sort({ createdAt: -1 });
       return res.status(200).json({ success: true, notices });
     } catch (err) {
       return res.status(500).json({ success: false, message: 'Failed to fetch notices.' });
+    }
+
+  }
+
+  static async updateNotice(req, res) {
+    try {
+      const { title, content, type, target_role, target_hostel, expires_at } = req.body;
+      const notice = await Notice.findOne({ _id: req.params.id, published_by: req.user._id });
+      if (!notice) {
+        return res.status(404).json({ success: false, message: 'Notice not found or not owned by current user.' });
+      }
+
+      notice.title = title;
+      notice.content = content;
+      notice.type = type || notice.type;
+      notice.target_role = target_role || notice.target_role;
+      notice.target_hostel = target_hostel || notice.target_hostel;
+      notice.expires_at = expires_at ? new Date(expires_at) : null;
+      await notice.save();
+
+      return res.status(200).json({ success: true, message: 'Notice updated successfully.', notice });
+    } catch (err) {
+      return res.status(400).json({ success: false, message: err.message });
     }
   }
 

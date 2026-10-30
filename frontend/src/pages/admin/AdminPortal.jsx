@@ -340,6 +340,25 @@ COER253028021,Neha Agarwal,neha@demo.com,+91 9876511112,B.Tech CSE,Computer Scie
         />
       </div>
 
+      {activeTab === 'dashboard' && (
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h3 className="font-bold text-slate-800 text-base">Staff Account Management</h3>
+            <p className="text-xs text-slate-500 mt-1">
+              Create Warden, Dean, and Security Guard accounts from the Admin portal.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setCreateUserModal(true)}
+            className="w-full sm:w-auto justify-center flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-sm"
+          >
+            <UserPlus className="w-4 h-4" />
+            <span>Create Account</span>
+          </button>
+        </div>
+      )}
+
       {/* SUB-VIEW 1: Student Directory with QR Management */}
       {activeTab === 'students' && (
         <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">

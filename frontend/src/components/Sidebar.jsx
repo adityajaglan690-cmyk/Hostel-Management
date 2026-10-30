@@ -58,7 +58,7 @@ export default function Sidebar({ activeTab, setActiveTab, isOpen, onClose }) {
           { id: 'approvals', label: 'All Leave Approvals', icon: CheckSquare },
           { id: 'grace-late', label: 'Overdue & Late Violations', icon: ShieldAlert },
           { id: 'notices', label: 'Campus Announcements', icon: Bell },
-          { id: 'reports', label: 'Institutional Analytics', icon: FileSpreadsheet },
+          { id: 'reports', label: 'Hostel Reports', icon: FileSpreadsheet },
         ];
 
       case 'ADMIN':

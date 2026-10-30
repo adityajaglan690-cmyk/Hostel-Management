@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { 
-  Building2, 
   Bell, 
   LogOut, 
   Clock, 
@@ -60,8 +59,8 @@ export default function Navbar({ onToggleMobileMenu, isMobileMenuOpen }) {
               </button>
             )}
 
-            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shrink-0">
-              <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-white flex items-center justify-center shadow-md shrink-0 overflow-hidden">
+              <img src="/coer-logo.png" alt="COER University logo" className="h-full w-full object-contain" />
             </div>
             <div className="min-w-0">
               <div className="flex items-center space-x-1.5 sm:space-x-2">

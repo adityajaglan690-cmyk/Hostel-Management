@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import api from '../services/api';
 import { 
   GraduationCap, 
   ShieldCheck, 
@@ -10,13 +11,19 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-export default function Login({ onRegisterClick, onStaffRegisterClick }) {
+export default function Login({ onRegisterClick }) {
   const { login } = useAuth();
   const [selectedRole, setSelectedRole] = useState('STUDENT');
   const [collegeId, setCollegeId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [forgotOpen, setForgotOpen] = useState(false);
+  const [forgotStep, setForgotStep] = useState('request');
+  const [forgotOtp, setForgotOtp] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [forgotMessage, setForgotMessage] = useState('');
+  const [forgotError, setForgotError] = useState('');
 
   const roles = [
     { id: 'STUDENT', label: 'Student', icon: GraduationCap, color: 'blue' },
@@ -45,6 +52,38 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
       setError(err.response?.data?.message || 'Server connection error.');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const requestPasswordReset = async (e) => {
+    e.preventDefault();
+    setForgotError('');
+    setForgotMessage('');
+    try {
+      const res = await api.post('/auth/student/forgot-password', { college_id: collegeId });
+      setForgotMessage(`${res.data.message} OTP sent to ${res.data.phone}.`);
+      setForgotStep('reset');
+    } catch (err) {
+      setForgotError(err.response?.data?.message || 'Unable to request password reset.');
+    }
+  };
+
+  const resetPassword = async (e) => {
+    e.preventDefault();
+    setForgotError('');
+    setForgotMessage('');
+    try {
+      const res = await api.post('/auth/student/reset-password', {
+        college_id: collegeId,
+        otp: forgotOtp,
+        new_password: newPassword
+      });
+      setForgotMessage(res.data.message);
+      setForgotStep('request');
+      setForgotOtp('');
+      setNewPassword('');
+    } catch (err) {
+      setForgotError(err.response?.data?.message || 'Unable to reset password.');
     }
   };
 
@@ -157,28 +196,64 @@ export default function Login({ onRegisterClick, onStaffRegisterClick }) {
                   Register Student Account & Permanent QR
                 </button>
               </p>
-            </div>
-          )}
-          {selectedRole !== 'STUDENT' && (
-            <div className="mt-6 text-center pt-4 border-t border-slate-100">
-              <p className="text-xs text-slate-500">
-                New official account?{' '}
-                <button
-                  type="button"
-                  onClick={() => onStaffRegisterClick(selectedRole)}
-                  className="font-bold text-brand-600 hover:text-brand-700 hover:underline"
-                >
-                  Create {roles.find((role) => role.id === selectedRole)?.label} Account
-                </button>
-              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setForgotOpen(true);
+                  setForgotStep('request');
+                  setForgotError('');
+                  setForgotMessage('');
+                }}
+                className="mt-3 font-bold text-brand-600 hover:text-brand-700 hover:underline text-xs"
+              >
+                Forgot Password?
+              </button>
             </div>
           )}
         </div>
 
         {/* Security Notice */}
-        <div className="mt-6 text-center text-xs text-slate-400">
+        <div className="mt-6 text-center text-xs text-white">
           Strict Role-Based Access Control enforced. Cross-portal logins will be rejected and logged to audit security.
+          <div className="mt-1">Design and Developed by ADITYA JAGLAN</div>
         </div>
+
+        {forgotOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 px-4">
+            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Student Password Reset</h3>
+                  <p className="mt-1 text-xs text-slate-500">OTP verification is available only for student accounts.</p>
+                </div>
+                <button type="button" onClick={() => setForgotOpen(false)} className="text-xl text-slate-400 hover:text-slate-700" aria-label="Close">×</button>
+              </div>
+              {forgotError && <p className="mt-4 rounded-lg bg-rose-50 p-3 text-xs text-rose-700">{forgotError}</p>}
+              {forgotMessage && <p className="mt-4 rounded-lg bg-emerald-50 p-3 text-xs text-emerald-700">{forgotMessage}</p>}
+              {forgotStep === 'request' ? (
+                <form onSubmit={requestPasswordReset} className="mt-5 space-y-4">
+                  <label className="block text-xs font-bold text-slate-700">
+                    College Student ID / Roll No.
+                    <input value={collegeId} onChange={(e) => setCollegeId(e.target.value)} required className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2.5 text-xs uppercase font-mono" placeholder="Enter your COER ID" />
+                  </label>
+                  <button type="submit" className="w-full rounded-xl bg-brand-600 py-3 text-xs font-bold text-white hover:bg-brand-700">Send OTP</button>
+                </form>
+              ) : (
+                <form onSubmit={resetPassword} className="mt-5 space-y-4">
+                  <label className="block text-xs font-bold text-slate-700">
+                    OTP
+                    <input value={forgotOtp} onChange={(e) => setForgotOtp(e.target.value)} required inputMode="numeric" maxLength="6" className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2.5 text-xs font-mono" placeholder="Enter 6-digit OTP" />
+                  </label>
+                  <label className="block text-xs font-bold text-slate-700">
+                    New Password
+                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength="8" className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2.5 text-xs" placeholder="At least 8 characters" />
+                  </label>
+                  <button type="submit" className="w-full rounded-xl bg-brand-600 py-3 text-xs font-bold text-white hover:bg-brand-700">Reset Password</button>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

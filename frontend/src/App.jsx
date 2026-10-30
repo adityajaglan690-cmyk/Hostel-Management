@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import StaffRegister from './pages/StaffRegister';
 import StudentPortal from './pages/student/StudentPortal';
 import WardenPortal from './pages/warden/WardenPortal';
 import DeanPortal from './pages/dean/DeanPortal';
@@ -16,7 +15,6 @@ import { Building2 } from 'lucide-react';
 export default function App() {
   const { user, loading } = useAuth();
   const [authView, setAuthView] = useState('login'); // 'login' | 'register'
-  const [registerRole, setRegisterRole] = useState('WARDEN');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -36,19 +34,12 @@ export default function App() {
     return authView === 'login' ? (
       <Login
         onRegisterClick={() => {
-          setRegisterRole('STUDENT');
           setAuthView('register');
-        }}
-        onStaffRegisterClick={(role) => {
-          setRegisterRole(role);
-          setAuthView('staff-register');
         }}
       />
     ) : authView === 'register' ? (
       <Register onBackToLogin={() => setAuthView('login')} />
-    ) : (
-      <StaffRegister role={registerRole} onBackToLogin={() => setAuthView('login')} />
-    );
+    ) : null;
   }
 
   // Authenticated Portal Rendering

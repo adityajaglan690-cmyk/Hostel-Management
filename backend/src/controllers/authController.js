@@ -4,9 +4,11 @@ const Parent = require('../models/Parent');
 const SecurityEvent = require('../models/SecurityEvent');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { JWT_SECRET } = require('../middleware/authMiddleware');
 const { ROLES, USER_STATUS, MAX_LOGIN_ATTEMPTS, LOCK_TIME_MINUTES } = require('../config/constants');
 const { logAudit } = require('../services/auditService');
+const PasswordResetOtp = require('../models/PasswordResetOtp');
 
 class AuthController {
   /**
@@ -317,6 +319,89 @@ class AuthController {
         success: false,
         message: 'Internal server error during student registration.'
       });
+    }
+  }
+
+  static async requestStudentPasswordReset(req, res) {
+    try {
+      const { college_id } = req.body;
+      if (!college_id) {
+        return res.status(400).json({ success: false, message: 'Student ID is required.' });
+      }
+
+      const user = await User.findOne({
+        college_id: college_id.trim().toUpperCase(),
+        role: ROLES.STUDENT,
+        status: USER_STATUS.ACTIVE
+      });
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'Active student account not found for this ID.' });
+      }
+
+      const otp = crypto.randomInt(100000, 1000000).toString();
+      await PasswordResetOtp.findOneAndUpdate(
+        { user_id: user._id },
+        {
+          user_id: user._id,
+          otp_hash: await bcrypt.hash(otp, 10),
+          expires_at: new Date(Date.now() + 10 * 60 * 1000),
+          attempts: 0
+        },
+        { upsert: true, new: true, setDefaultsOnInsert: true }
+      );
+
+      console.log(`[Password Reset][DEV OTP] Student ${user.college_id} phone ${user.phone}: ${otp}`);
+      return res.status(200).json({
+        success: true,
+        message: 'OTP generated for the phone number associated with this student profile.',
+        phone: user.phone.replace(/\d(?=\d{4})/g, '*')
+      });
+    } catch (error) {
+      console.error('Student password reset request error:', error);
+      return res.status(500).json({ success: false, message: 'Unable to start password reset.' });
+    }
+  }
+
+  static async resetStudentPassword(req, res) {
+    try {
+      const { college_id, otp, new_password } = req.body;
+      if (!college_id || !otp || !new_password) {
+        return res.status(400).json({ success: false, message: 'Student ID, OTP, and new password are required.' });
+      }
+      if (new_password.length < 8) {
+        return res.status(400).json({ success: false, message: 'New password must contain at least 8 characters.' });
+      }
+
+      const user = await User.findOne({
+        college_id: college_id.trim().toUpperCase(),
+        role: ROLES.STUDENT,
+        status: USER_STATUS.ACTIVE
+      });
+      const resetRequest = user ? await PasswordResetOtp.findOne({ user_id: user._id }) : null;
+      if (!user || !resetRequest || resetRequest.expires_at < new Date()) {
+        return res.status(400).json({ success: false, message: 'OTP is invalid or has expired.' });
+      }
+      if (resetRequest.attempts >= 5) {
+        return res.status(429).json({ success: false, message: 'Too many invalid OTP attempts. Request a new OTP.' });
+      }
+
+      const validOtp = await bcrypt.compare(otp.trim(), resetRequest.otp_hash);
+      if (!validOtp) {
+        resetRequest.attempts += 1;
+        await resetRequest.save();
+        return res.status(400).json({ success: false, message: 'OTP is invalid or has expired.' });
+      }
+
+      user.password_hash = await bcrypt.hash(new_password, 10);
+      user.failed_login_attempts = 0;
+      user.locked_until = null;
+      await user.save();
+      await PasswordResetOtp.deleteOne({ _id: resetRequest._id });
+
+      return res.status(200).json({ success: true, message: 'Password reset successfully. You can now sign in.' });
+    } catch (error) {
+      console.error('Student password reset error:', error);
+      return res.status(500).json({ success: false, message: 'Unable to reset student password.' });
     }
   }
 

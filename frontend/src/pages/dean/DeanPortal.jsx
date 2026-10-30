@@ -4,6 +4,7 @@ import api, { API_BASE_URL } from '../../services/api';
 import StatCard from '../../components/StatCard';
 import StatusBadge from '../../components/StatusBadge';
 import Modal from '../../components/Modal';
+import DeanHostelReport from './DeanHostelReport';
 import { 
   Building2, 
   Users, 
@@ -16,7 +17,8 @@ import {
   FileSpreadsheet, 
   Download,
   Bell,
-  ShieldCheck
+  ShieldCheck,
+  Edit3
 } from 'lucide-react';
 
 export default function DeanPortal({ activeTab, setActiveTab }) {
@@ -34,12 +36,28 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
     content: '',
     type: 'GENERAL'
   });
+  const [notices, setNotices] = useState([]);
+  const [editingNoticeId, setEditingNoticeId] = useState(null);
 
   useEffect(() => {
     fetchOverview();
     fetchPendingRequests();
     fetchGraceAndLate();
+    fetchNotices();
   }, []);
+
+  const fetchNotices = async () => {
+    try {
+      const res = await api.get('/notices');
+      if (res.data.success) {
+        setNotices(res.data.notices.filter((notice) => (
+          String(notice.published_by?._id || notice.published_by) === String(user.id || user._id)
+        )));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchOverview = async () => {
     try {
@@ -119,19 +137,34 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
   const handleCreateNotice = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('/notices', {
+      const payload = {
         ...noticeForm,
         target_role: 'ALL',
         target_hostel: 'ALL'
-      });
+      };
+      const res = editingNoticeId
+        ? await api.put(`/notices/${editingNoticeId}`, payload)
+        : await api.post('/notices', payload);
       if (res.data.success) {
-        alert('Campus notice published.');
+        alert(editingNoticeId ? 'Campus notice updated.' : 'Campus notice published.');
+        setNotices((currentNotices) => editingNoticeId
+          ? currentNotices.map((notice) => notice._id === editingNoticeId ? res.data.notice : notice)
+          : [res.data.notice, ...currentNotices]);
         setNoticeModalOpen(false);
+        setEditingNoticeId(null);
         setNoticeForm({ title: '', content: '', type: 'GENERAL' });
       }
     } catch (err) {
       alert(err.response?.data?.message || 'Notice creation failed.');
     }
+  };
+
+  const openNoticeEditor = (notice = null) => {
+    setEditingNoticeId(notice?._id || null);
+    setNoticeForm(notice
+      ? { title: notice.title, content: notice.content, type: notice.type }
+      : { title: '', content: '', type: 'GENERAL' });
+    setNoticeModalOpen(true);
   };
 
   return (
@@ -362,11 +395,71 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
         </div>
       )}
 
+      {activeTab === 'reports' && <DeanHostelReport />}
+
+      {activeTab === 'notices' && (
+        <div className="space-y-5">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 shrink-0"><Bell className="w-5 h-5" /></div>
+              <div>
+                <h3 className="font-bold text-slate-800 text-base">Publish Hostel Notice</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Post curfew updates, holiday instructions or announcements</p>
+              </div>
+            </div>
+            <button type="button" onClick={() => openNoticeEditor()} className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-xs">
+              Create Notice
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {[
+              ['Holiday Notice', 'Students are requested to submit holiday leave applications in advance. Please follow the approved departure and return timings.', 'HOLIDAY', 'bg-amber-50 text-amber-600'],
+              ['Mess Notice', 'The weekly mess menu and meal timings are displayed on the hostel notice board. Please carry your valid resident identity.', 'HOSTEL', 'bg-emerald-50 text-emerald-600'],
+              ['Electricity Notice', 'Scheduled electrical maintenance may cause a temporary power interruption. Residents are requested to plan accordingly.', 'GENERAL', 'bg-blue-50 text-blue-600']
+            ].map(([title, content, type, iconClass]) => (
+              <div key={title} className="bg-white rounded-3xl border border-slate-200 shadow-xs p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div className={`p-2 rounded-xl ${iconClass}`}><Bell className="w-4 h-4" /></div>
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-slate-400">{type}</span>
+                </div>
+                <h4 className="mt-4 font-bold text-slate-800 text-sm">{title}</h4>
+                <p className="mt-2 text-xs leading-5 text-slate-500">{content}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+            <div className="p-4 sm:p-6 border-b border-slate-100">
+              <h3 className="font-bold text-slate-800 text-base">Published Notices</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Edit notices published from this Dean account</p>
+            </div>
+            {notices.length === 0 ? (
+              <p className="p-5 text-xs text-slate-500">No notices published from this account yet.</p>
+            ) : (
+              <div className="divide-y divide-slate-100">
+                {notices.map((notice) => (
+                  <div key={notice._id} className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm">{notice.title}</h4>
+                      <p className="text-xs text-slate-500 mt-1">{notice.content}</p>
+                    </div>
+                    <button type="button" onClick={() => openNoticeEditor(notice)} className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+                      <Edit3 className="w-3.5 h-3.5" /><span>Edit</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Modal: Publish Campus Notice */}
       <Modal
         isOpen={noticeModalOpen}
         onClose={() => setNoticeModalOpen(false)}
-        title="Publish Campus-Wide Notice (Dean Office)"
+        title={editingNoticeId ? 'Edit Campus Notice (Dean Office)' : 'Publish Campus-Wide Notice (Dean Office)'}
       >
         <form onSubmit={handleCreateNotice} className="space-y-3">
           <div>
@@ -405,7 +498,7 @@ export default function DeanPortal({ activeTab, setActiveTab }) {
               type="submit"
               className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 shadow-xs"
             >
-              Publish Campus-Wide
+              {editingNoticeId ? 'Update Notice' : 'Publish Campus-Wide'}
             </button>
           </div>
         </form>
